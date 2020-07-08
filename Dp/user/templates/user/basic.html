@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Deshpande Pedhewale</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/shop-homepage.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    
+
+   <title>{% block title %} {% endblock %}</title>
+    <style>
+            {% block css %}
+              body {
+                          
+                          background-color: #e6e6e6;
+                    }
+
+             {% endblock %}
+    </style>
+</head>
+
+<body>
+
+<!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-warning">
+   <div class="container">
+              <img  src="{% static 'basicimages/headerlogo.png' %}" alt="" class="mr-3 mt-0 " style="width:25%;">
+              <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+             </button> -->
+             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+ 
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/user">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/user/contact">Contact</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/user/about">About Us</a>
+      </li>
+      
+    </ul>
+    <a href="/user/checkout" class="btn btn-sm btn-primary btn-lg" id="popcart" style="float: right;">
+          <span class="glyphicon glyphicon-shopping-cart"></span>Cart(<span id="cart">0</span>)
+        </a>
+    <a href="/user"><button class='btn btn-primary btn-sm mx-2'  style="float: right" onclick='clearCart()' id='clearCart'>Clear Cart</button></a>
+
+  </div>
+   </div>
+</nav>
+
+{% block body %} {% endblock %}
+
+<footer class="footer bg-warning" >
+       
+            
+                  <img src="{% static 'basicimages/footerlogo.png' %}" alt="" class="mx-3 mt-0" style="width:180px">
+                  <p class="mb-3 text-right text-black"><small>Contact Details:+91 94056 25290 | 02186-225290</small></p>
+                   <p class="mb-3 text-right text-black"><small>deshpandepedhewale.com&copy;2020</small></p>
+            
+      
+      </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.5.1.js"integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="crossorigin="anonymous"></script>
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    {% block js %} {% endblock %}
+</body>
+
+</html>
+
+
+
+

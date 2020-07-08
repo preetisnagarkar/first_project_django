@@ -1,0 +1,211 @@
+{% extends 'user/basic.html' %}
+
+{% block title %} Checkout {% endblock %}
+{% block body %}
+
+<!-- Create For checkout Page -->
+
+<!-- <div class="container"> -->
+<div class="container">
+	<div class="row">    
+        <div class="col-lg-9 mt-1 mb-4">
+			<h2>Items in your cart</h2>
+			<table class="table">
+			<thead class="thead-light" id="items">
+			<tr>
+			<th scope="col">#</th>
+			<th scope="col">Product Name</th>
+			<th scope="col">Price (₹)</th>
+			<th scope="col">Qty.</th>
+			<th scope="col">Amount (₹)</th>
+			</tr>
+			</thead>
+			<tbody>
+									    
+			</tbody>
+			</table>
+			<div>
+										 
+				<h5 style="float: right;"> <strong> Cart Total=₹
+				<span id="totalPrice"></span></strong></h5><br>
+				<h3> <strong> Total Price=₹
+				<span id="gtotalPrice"></span></strong></h3>
+				<h6><strong>(NOTE:Delivery charges below ₹700 cart value is ₹70 all over Maharashtra.)</strong></h6>
+
+			</div>
+				<a href="/user"><button class='btn btn-primary btn-sm mx-2' onclick='clearCart()' id='clearCart'>Clear Cart</button></a>
+		</div>
+
+		<div class="row mb-5">
+		<div class="col my-5 mx-3" style="width: 100%">
+			<h2>Enter your details</h2>
+					<form method="post" action="/user/checkout/">{% csrf_token %}
+					<input type="hidden" name="itemsJson" id="itemsJson">
+					<input type="hidden" name="amount" id="amount">
+							<div class="form-row">
+							        <div class="form-group col-md-6" style="padding-bottom: 0%">
+							                <label for="inputname">Name</label>
+							                <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+							        </div>
+							        <div class="form-group col-md-6" style="padding-bottom: 0%">
+							                <label for="inputEmail4">Email</label>
+							                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+							        </div>
+							</div>
+							<div class="form-group">
+							        <label for="inputAddress">Address</label>
+							        <input type="text" class="form-control" id="address1" name="address1" placeholder="1234 Main St">
+							</div>
+							<div class="form-group">
+							                <label for="inputAddress2">Address line 2</label>
+							                <input type="text" class="form-control" id="address2" name="address2" placeholder="Apartment, studio, or floor">
+							</div>
+							<div class="form-row">
+							        <div class="form-group col-md-6" style="padding-bottom: 0%">
+							                    <label for="inputCity">City</label>
+							                    <input type="text" class="form-control" id="city" name="city">
+							        </div>
+							        <div class="form-group col-md-4">
+							                    <label for="inputState">State</label>
+							                    <input type="text" class="form-control" id="state" name="state"  placeholder="Enter State">
+							        </div>
+							        <div class="form-group col-md-2">
+							                    <label for="inputZip">Zip</label>
+							                    <input type="text" class="form-control" id="zip_code" name="zip_code">
+							        </div>
+							</div>
+							<div class="form-group">
+							                <label for="inputZip">Phone Number</label>
+							                <input type="tel" class="form-control" id="phone" name="phone">
+							</div>
+							            <button type="submit" class="btn btn-primary">Place Order</button>
+					</form>
+		</div> 
+		</div>
+</div>
+</div>		
+
+
+
+
+{% endblock %}
+	
+
+{% block js %}
+<script>
+	if(localStorage.getItem('cart')==null){
+  var cart = {}
+ }
+ else
+ {
+  cart = JSON.parse(localStorage.getItem('cart'));
+  
+ }
+ console.log(cart);
+ var sum = 0;
+ var amount = 0;
+ var totalPrice = 0;
+ var gtotalPrice = 0;
+
+ var i=1;
+ if ($.isEmptyObject(cart)){
+    mystr = 'your cart is empty'
+    $('#items').append(mystr);
+ }
+ else
+ {
+
+	 for (item in cart){
+
+	 	let name = cart[item][1];
+	 	let qty = cart[item][0];
+	 	let itemPrice = cart[item][2];
+	 	let amount = cart[item][3];
+	 	let gtotalPrice = cart[item][4];
+	 	sum = sum + qty;
+	 	amount = itemPrice * qty;
+	 	totalPrice = totalPrice + amount;
+
+	 	// let price = 
+	 	// mystr =`<li class="list-group-item d-flex justify-content-between align-item-center">${name}<span class="badge badge-primary badge-pill">${qty}</span></li>`
+	 	mystr = `<tr>
+		      <th scope="row">${i}</th>
+		      <td>${name}</td>
+		      <td>${itemPrice}</td>
+		      <td>${qty}</td>
+		      <td>${amount}</td>
+		    </tr>`
+	 	$('#items').append(mystr);
+	 	i = i+1;
+	 }
+	 if(totalPrice>700)
+	 	{
+	 		var cvcharge=0;
+	 		gtotalPrice = totalPrice + cvcharge;
+	 		
+	 	}
+	 	else
+	 	{
+	 		var cvcharge=70;
+	 		gtotalPrice = totalPrice + cvcharge;
+	 
+	 	}
+
+ }
+ document.getElementById('cart').innerHTML = sum;
+ document.getElementById('totalPrice').innerHTML = totalPrice;
+ document.getElementById('gtotalPrice').innerHTML = gtotalPrice;
+
+ $('#itemsJson').val(JSON.stringify(cart));
+ {% if thank %}
+ alert('thank you ordering with us. Your order id is {{id}}');
+ localStorage.clear();
+ document.location = "/user";
+ {% endif%}
+ $('#amount').val($('#gtotalPrice').html())
+
+ function updatePopover(cart)
+ {
+  
+  var popStr = "";
+  popStr = popStr + "<h5> Cart for your items</h5>";
+  var i = 1;
+  for (var item in cart){
+    popStr = popStr + "<b>" + i + "</b>. ";
+    popStr = popStr + document.getElementById('name' + item).innerHTML + "Price:" + document.getElementById('price' + item).innerHTML + "Qty: " + cart[item][0] + '<br>';
+    i = i+1;
+
+  }
+  popStr = popStr + "<a href='/user/checkout'><button class='btn btn-primary btn-sm mx-2' id='checkout'>Checkout</button></a>   <button class='btn btn-primary btn-sm mx-2' onclick='clearCart()' id='clearCart'>Clear Cart</button> "
+  document.getElementById('popcart').setAttribute('data-content', popStr);
+  // $('#popcart').popover('show');
+
+}
+
+function updateCart(cart){
+  var sum = 0;
+  for (var item in cart){
+    sum = sum + cart[item][0];
+    document.getElementById('div'+ item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'> + </button>";
+  }
+  localStorage.setItem('cart', JSON.stringify(cart));
+  document.getElementById('cart').innerHTML = sum;
+  console.log(cart);
+  updatePopover(cart);
+}
+  
+function clearCart(){
+  cart = JSON.parse(localStorage.getItem('cart'));
+  for (var item in cart){
+    // document.getElementById('div' + item).innerHTML = '<button id="'+ item +'" class="btn btn-primary cart">Add To Cart</button>';
+    console.log(cart);
+  }
+  localStorage.clear();
+  cart = {};
+  updateCart(cart);
+
+}
+
+</script>
+
+{% endblock %}

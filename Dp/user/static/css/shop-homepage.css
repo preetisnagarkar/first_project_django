@@ -1,0 +1,23 @@
+/*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/templates/shop-homepage)
+ * Copyright 2013-2020 Start Bootstrap
+ * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+.footer {
+   position: fixed;
+   bottom: 0;
+   width: 100%;
+   height: auto;
+   padding-left: 0;
+   line-height: 0;
+   background-color: #ffc107;
+}
+.col-md-6
+{
+	
+	padding-bottom: 12%;
+}
+body {
+  
+  background-color: #e6e6e6;
+}

@@ -1,0 +1,57 @@
+{% extends 'user/basic.html' %}
+
+{% block title %} Payment Status {% endblock %}
+{% block body %}
+<div class="container">
+  <!-- Content here -->
+
+    <div class="card text-center">
+      <div class="card-header">
+        <h2><strong>Payment Status</strong></h2>
+        <!-- {{response}} -->
+
+      </div>
+
+      <div class="card-body">
+        {% if response.RESPCODE == '01' %}
+        <div class="alert alert-success" role="alert">We received your Order...</div>
+        <div class="row" style="padding-left: 30%">
+          <div class="card my-0">
+            <div class="card-header bg-transparent border-success"><strong>Order Details</strong></div>
+            <div class="card-body">
+                <p class="card-text"><strong>Order ID:</strong> {{response.ORDERID}}</p>
+                <p class="card-text"><strong>Transaction Id:</strong> {{response.TXNID}}</p>
+                <p class="card-text"><strong>DATE:</strong> {{response.TXNDATE}}</p>
+                <p class="card-text"><strong>Total Amount:</strong> {{response.TXNAMOUNT}}</p>
+            </div>
+            <div class="card-footer text-muted">
+              Thank you for ordering from Deshpande Pedhewale....!
+            </div>
+          </div>
+          {% else %}
+            <div class="alert alert-danger" role="alert">Transaction Failed...</div>
+             <a href="/user/checkout" class="btn btn-primary">Tray Again</a>
+             <!-- <div class="card-footer text-muted">
+              Thank you for ordering from Deshpande Pedhewale....!
+            </div> -->
+          {% endif %}
+        </div>
+      </div>
+       
+    </div>
+
+</div>
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+<!-- {% block js %}
+
+{% endblock %} -->
