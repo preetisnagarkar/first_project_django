@@ -65,7 +65,7 @@ def checkout(request):
         "CHANNEL_ID": "WEB",
         "INDUSTRY_TYPE_ID": "Retail",
         "WEBSITE": "WEBSTAGING",
-        "CALLBACK_URL" : "http://ec2-13-126-17-214.ap-south-1.compute.amazonaws.com/user/handlerequest/",
+        "CALLBACK_URL" : "13.126.17.214/user/handlerequest/",
     }
         param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(param_dict, MERCHANT_KEY)
         return render(request, 'user/paytm.html', {'param_dict': param_dict})
