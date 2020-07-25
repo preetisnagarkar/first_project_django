@@ -10,7 +10,6 @@ MERCHANT_KEY = 'wAwNeIGinzsVfIjG';
 
 def index(request):
     products = Product.objects.all()
-    print(products)
     params = {'product': products}
     return render(request, 'user/index.html', params)
 
@@ -25,7 +24,7 @@ def about(request):
 def contact(request):
     thank = False
     if request.method == "POST":
-        print(request)
+      #  print(request)
         name = request.POST.get('name', '')
         email = request.POST.get('email', '')
         phone = request.POST.get('phone', '')
@@ -52,11 +51,11 @@ def checkout(request):
         order.save()
         # update = OrderUpdate(order_id=order_id, update_desc="the oreder has been placed")
         # update.save()
-        print(items_json)
+       # print(items_json)
         thank = True
         id = order.order_id
         
-        # return render(request, 'user/checkout.html', {'thank': thank, 'id': id})
+       # return render(request, 'user/checkout.html', {'thank': thank, 'id': id})
         param_dict = {
         "MID": "uRKQis55188856454271",
         "ORDER_ID": str(order.order_id),
@@ -65,7 +64,7 @@ def checkout(request):
         "CHANNEL_ID": "WEB",
         "INDUSTRY_TYPE_ID": "Retail",
         "WEBSITE": "WEBSTAGING",
-        "CALLBACK_URL" : "http://ec2-13-233-244-129.ap-south-1.compute.amazonaws.com/user/handlerequest/",
+        "CALLBACK_URL" : "http://ec2-13-233-117-3.ap-south-1.compute.amazonaws.com/user/handlerequest/",
     }
         param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(param_dict, MERCHANT_KEY)
         return render(request, 'user/paytm.html', {'param_dict': param_dict})
@@ -77,18 +76,18 @@ def productView(request, myid):
 
 @csrf_exempt
 
-def handlerequest(request):
-    form = request.POST
+def handlerequest(Request):
+    form = Request.POST
     response_dict = {}
     for i in form.keys():
         response_dict[i]= form[i]
         if i == 'CHECKSUMHASH':
-            checksum = form[i]
-
+            checksum = form[i] 
     verify = Checksum.verify_checksum(response_dict, MERCHANT_KEY, checksum)
     if verify:
         if response_dict['RESPCODE'] == '01':
-            print('oder successful')
-        else:
+		print('Successful')
+	else:
             print('oder was not successful'+ response_dict['RESPMSG'])
-    return render(request, 'user/paymentstatus.html', {'response': response_dict})
+
+    return render(request,'user/paymentstatus.html', {'response': response_dict})
